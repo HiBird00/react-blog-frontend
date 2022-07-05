@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,9 +17,11 @@ const EditorContainer = () => {
   );
 
   // 언마운트 될 때 초기화
+  const mounted = useRef(false);
   useEffect(() => {
     return () => {
-      dispatch(initialize());
+      if (mounted.current) dispatch(initialize());
+      mounted.current = true;
     };
   }, [dispatch]);
 
